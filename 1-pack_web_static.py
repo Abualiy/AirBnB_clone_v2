@@ -1,19 +1,19 @@
 #!/usr/bin/python3
-from fabric.api import *
-import os
-from datetime import datetime
-
-env.hosts = ['localhost']
+from fabric.api import local
+from time import strftime
+from datetime import date
 
 
 def do_pack():
+    """ A script that generates archive the contents of web_static folder"""
+
+    filename = strftime("%Y%m%d%H%M%S")
     try:
-        filepath = "versions/web_static_" + datetime.now().\
-                   strftime("%Y%m%d%H%M%S") + ".tgz"
         local("mkdir -p versions")
-        local("tar -zcvf versions/web_static_$(date +%Y%m%d%H%M%S).tgz\
-        web_static")
-        print("web_static packed: {} -> {}".
-              format(filepath, os.path.getsize(filepath)))
-    except:
-            return None
+        local("tar -czvf versions/web_static_{}.tgz web_static/"
+              .format(filename))
+
+        return "versions/web_static_{}.tgz".format(filename)
+
+    except Exception as e:
+        return None
