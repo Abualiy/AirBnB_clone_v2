@@ -25,6 +25,11 @@ def do_deploy(archive_path):
         run('sudo mkdir -p /data/web_static/\
                 releases/web_static_{}/'.format(timestamp))
 
+        # uncompress
+        run('sudo tar -xzf /tmp/web_static_{}.tgz -C \
+/data/web_static/releases/web_static_{}/'
+                    .format(timestamp, timestamp))
+
         # remove the archve
         run('sudo rm /tmp/web_static_{}.tgz'.format(timestamp))
 
