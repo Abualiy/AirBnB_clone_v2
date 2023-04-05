@@ -7,5 +7,13 @@ from datetime import date
 def do_pack():
     """Fabric script that generates archive from the contents of web_static"""
 
+    filename = strftime("%Y%m%d%H%M%S")
+    try:
+        local("mkdir -p version")
+        local("tra -czvf versions/web_static_{}.tgz web_static/"
+                .format(filename))
 
-    filename = strf
+        return "version/web_static_{}.tgz".format(filename)
+
+    except Exception as e:
+        return None
