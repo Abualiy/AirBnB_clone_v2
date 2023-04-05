@@ -3,7 +3,7 @@ from fabric.api import *
 import os
 from datetime import datetime
 
-env.hosts = ['54.144.223.170', '23.20.239.228']
+env.hosts = ['23.20.239.228', '54.144.223.170']
 
 
 def deploy():
