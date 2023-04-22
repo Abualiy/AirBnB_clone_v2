@@ -1,29 +1,31 @@
 #!/usr/bin/python3
-"""script to start a flask app on localhost
-"""
+'''
+    script that starts a Flask web application:
+'''
+
+from flask import Flask, render_template
+
+# importing storage and state
+
 from models import storage
-from flask import Flask
-from flask import render_template
+from models.state import State
+
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def appcontext_teardown(exc=None):
-    """called on teardown of app contexts,
-        for more info on contexts visit
-        -> http://flask.pocoo.org/docs/1.0/appcontext/
-        Storage.close() closes the sql scoped session or reloads file
-            storage.
-    """
+def tearDown(self):
+    ''' remove the current SQLAlchemy Session '''
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
-def conditional_templating(n=None):
-    """checking input data using templating"""
-    return render_template('7-states_list.html',
-                           states=storage.all("State"))
+def listStates():
+    ''' lists States '''
+    states = list(storage.all(State).values())
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == '__main__':
+    storage.reload()
     app.run(host='0.0.0.0', port=5000)
