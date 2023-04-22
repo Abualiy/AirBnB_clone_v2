@@ -19,11 +19,12 @@ def appcontext_teardown(exc=None):
     storage.close()
 
 
-@app.route('/states_list', strict_slashes=False)
-def conditional_templating(n=None):
+@app.route('/hbnb_filters', strict_slashes=False)
+def conditional_templating(id=None):
     """checking input data using templating"""
-    return render_template('7-states_list.html',
-                           states=storage.all("State"))
+    return render_template('10-hbnb_filters.html',
+                           states=storage.all("State").values(),
+                           amenities=storage.all("Amenity").values())
 
 
 if __name__ == '__main__':
