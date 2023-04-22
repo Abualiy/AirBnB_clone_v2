@@ -1,4 +1,5 @@
-pt to start a flask app on localhost
+#!/usr/bin/python3
+"""script to start a flask app on localhost
 """
 from flask import Flask
 from flask import render_template
